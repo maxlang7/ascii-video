@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+uploads/
+outputs/
+release-assets/
+*.mp4
+*.mov
+test-detail-first-pass/
+sample-*/

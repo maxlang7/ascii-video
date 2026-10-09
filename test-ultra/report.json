@@ -1,0 +1,14 @@
+{
+  "source_bytes": 155612295,
+  "duration_seconds": 346.5833333333333,
+  "preset": "ultra",
+  "columns": 320,
+  "rows": 122,
+  "fps": 24,
+  "audio": false,
+  "files": {
+    "index.html": 2183810,
+    "proxy.mp4": 1620867,
+    "ascii.mp4": 113669949
+  }
+}

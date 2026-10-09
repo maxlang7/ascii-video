@@ -1,0 +1,14 @@
+{
+  "source_bytes": 155612295,
+  "duration_seconds": 346.6,
+  "preset": "detail",
+  "columns": 256,
+  "rows": 98,
+  "fps": 20,
+  "audio": false,
+  "files": {
+    "index.html": 1604749,
+    "proxy.mp4": 1186571,
+    "ascii.mp4": 50289958
+  }
+}
