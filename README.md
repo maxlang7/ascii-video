@@ -2,7 +2,7 @@
 
 Default preview: https://maxlang7.github.io/ascii-video/
 
-[Download the Ultra MP4](https://github.com/maxlang7/ascii-video/releases/download/v1.0.0/ultra-ascii.mp4) · [All videos and examples](https://github.com/maxlang7/ascii-video/releases/tag/v1.0.0)
+[Download the Ultra MP4](https://github.com/maxlang7/ascii-video/releases/download/v1.1.0/ultra-vivid-ascii.mp4) · [All videos and examples](https://github.com/maxlang7/ascii-video/releases/tag/v1.0.0)
 
 A local MP4/MOV converter. It produces colored ASCII on black, a standalone HTML player, and a compressed H.264 MP4. Originals are preserved. No cloud service or API key.
 
@@ -28,13 +28,13 @@ Use a new output directory each time. Default preset is `ultra`. Add `--audio` t
 | tiny | 48 | 6 | No | 43 |
 | small | 128 | 12 | 16 colors | 34 |
 | detail | 256 | 20 | 16 colors | 38 |
-| ultra | 320 | 24 | 16 colors | 36 |
+| ultra | 320 | 24 | Original RGB, bold | 38 |
 
 The smallest preset sacrifices detail and smoothness. Size depends on the source motion and duration; a smaller MP4 is not guaranteed for every already compressed input. Audio is off by default. Audio adds about 180 KB per minute plus container overhead.
 
 ## How it works
 
-FFmpeg samples the video into a dense character grid. Brightness chooses a glyph from ` .,:;i+*ox%#@`. Ink colors are normalized so dark parts of the image are not dimmed twice. Sharpening preserves small edges. The MP4 uses an exact glyph atlas, rendered with NumPy and Pillow.
+FFmpeg samples the video into a dense character grid. Brightness chooses a glyph from ` .,:;i+*ox%#@`. Ink colors are normalized so dark parts of the image are not dimmed twice. Sharpening preserves small edges. The MP4 uses an exact glyph atlas, rendered with NumPy and Pillow. Ultra preserves the source RGB hues, boosts ink brightness, and uses bold glyphs. The smaller presets retain the compact fixed palette.
 
 The web player stores a very small H.264 video at character-grid resolution. A WebGL shader converts those decoded pixels to colored glyphs during playback, using an embedded glyph atlas. Canvas rendering is available when WebGL is unavailable. The webpage embeds both the proxy video and the atlas, so it remains a single portable file. You can inspect the characters by zooming in. The embedded video has only one pixel per character cell.
 
@@ -50,7 +50,7 @@ Phone rotation is handled. High-density rendered MP4s require more conversion ti
 
 Full 347-second video: https://www.youtube.com/watch?v=rGbbhEi9a2A
 
-The Instagram reel was inspiration only; it was not downloaded or converted. The default full-resolution conversion is in `test-ultra/`, using a 1710 × 1080 source. See `test-ultra/report.json` for measured sizes. Earlier outputs in `test-small/` and `test-tiny/` are retained for comparison.
+The Instagram reel was inspiration only; it was not downloaded or converted. The default full-resolution conversion is in `test-ultra-vivid/`, using a 1710 × 1080 source. See `test-ultra-vivid/report.json` for measured sizes. Earlier outputs in `test-small/` and `test-tiny/` are retained for comparison.
 
 ## Validation of the revised renderer
 
@@ -60,6 +60,10 @@ Measured full-video output: standalone HTML 1,604,749 bytes; embedded spatial pr
 
 ## Ultra default
 
-Ultra is the default for the command line, local upload form, and web preview. The full test uses a 320 × 122 character grid, renders at 1920 × 1220 and 24 fps, and retains the full 346.58-second video. The standalone HTML is 2,183,810 bytes. The rendered H.264 MP4 is 113,669,949 bytes; it is distributed in Releases rather than Git history. The HD source is 155,612,295 bytes. The web player gives the best size-to-detail tradeoff.
+Ultra is the default for the command line, local upload form, and web preview. The current full test uses bold glyphs and original RGB hues on a 320 × 122 character grid, rendered at 1920 × 1220 and 24 fps. It retains the full 346.58-second video. The standalone HTML is 2,171,302 bytes; the rendered H.264 MP4 is 37,558,277 bytes. The HD input is 155,612,295 bytes. The full export reuses the existing character-grid video stream, which is also embedded in the web player.
 
-GitHub Pages hosts the preview players. Run the Python converter locally to process your own files. The repository includes code and all finished preview pages; Releases includes MP4 downloads and an archive of the example outputs and test inputs.
+GitHub Pages hosts the preview players. Run the Python converter locally to process your own files. Current Ultra downloads are in release v1.1.0. Earlier MP4s, example outputs, and test inputs remain in release v1.0.0.
+
+## Vivid Ultra
+
+Ultra now uses bold DejaVu Sans Mono glyphs with the original RGB hues. Ink brightness is boosted by 1.4× with hue-preserving normalization when its strongest channel reaches 255. Glyph density follows peak channel brightness so saturated colors retain enough character coverage. The web player shades a monochrome glyph atlas with the decoded RGB values, so full-color rendering does not require storing a larger colored atlas.
